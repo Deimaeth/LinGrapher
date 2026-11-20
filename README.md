@@ -1,6 +1,9 @@
 # LinGrapher (Linear Grapher)
 Linear Grapher is a program that takes in data measurements and produces a graph in matplotlib alongside the relevant data analysis to produce the uncertainties and errors for said data. It is intended to be a program to automate the data analysis for my physics labs because I am WAY too lazy to do it myself.
 
+## How it works
+Linear Grapher is *supposed* to be a simple program(alas that's more or less subjective) where you input your data that you collected in the lab and wham-bam et voila, you have your graph and all the statistical analysis on said data that you need in the form of a .txt file produced after running the program(the graph is also saved as a png for easy integration into your report or whatever).
+
 ## How to use
 First ensure that you have the latest version of python installed and the program installed to the cwd. Next, run it and pass the relevant command-line arguments for the data, uncertainties, x-axis label, y-axis label and the title of the graph. An example is given below:
 ```bash
