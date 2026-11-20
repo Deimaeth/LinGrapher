@@ -69,7 +69,7 @@ class LinGrapher:
         mcUB = leastSquares([self.x[0], self.x[-1]], [self.y[0]-self.deltaY[0], self.y[-1]+self.deltaY[-1]])
         mcLB = leastSquares([self.x[0], self.x[-1]], [self.y[0]+self.deltaY[0], self.y[-1]-self.deltaY[-1]])
         # mc +- delMC = mc +- max(mcUB-mc, mc-mcLB)
-        delMC = (max(mcUB[0]-mc[0],mc[0]-mcLB[0]), max(mcUB[1]-mc[1],mc[1]-mcLB[1]))
+        delMC = (max(abs(mcUB[0]-mc[0]),abs(mc[0]-mcLB[0])), max(abs(mcUB[1]-mc[1]),abs(mc[1]-mcLB[1])))
         return (mc, delMC)
     def plot(self, m, c):
         plt.scatter(self.x, self.y)
@@ -83,17 +83,18 @@ class LinGrapher:
         plt.title(self.title)
         plt.xlabel(self.xAxis)
         plt.ylabel(self.yAxis)
-        plt.savefig("graphedResults.png", bbox_inches="tight", dpi=400)
+        plt.savefig(f"{self.title}GraphedResults.png", bbox_inches="tight", dpi=400)
         plt.show()
         plt.close()
         return
     def graph(self):
         mcDeltamc = self.calcLine()
-        print(f"m = {mcDeltamc[0][0]} +- {mcDeltamc[1][0]}")
-        print(f"c = {mcDeltamc[0][1]} +- {mcDeltamc[1][1]}")
-        for i in range(0, len(self.x)):
-            print(f"x +- Delta x = {self.x[i]} +- {self.deltaX[i]}")
-            print(f"y +- Delta y = {self.y[i]} +- {self.deltaY[i]}")
+        with open(f"{self.title}Results.txt", "wt") as results:
+            results.write(f"m = {mcDeltamc[0][0]} +- {mcDeltamc[1][0]}\nc = {mcDeltamc[0][1]} +- {mcDeltamc[1][1]}\n")
+            for i in range(0, len(self.x)):
+                results.write(f"x +- Delta x = {self.x[i]} +- {self.deltaX[i]} : ")
+                results.write(f"y +- Delta y = {self.y[i]} +- {self.deltaY[i]}\n")
+        results.close()
         self.plot(mcDeltamc[0][0], mcDeltamc[0][1])
 
 def main():
